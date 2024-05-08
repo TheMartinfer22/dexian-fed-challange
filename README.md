@@ -1,5 +1,8 @@
 # DexianFedChallange
 
+![image](https://github.com/TheMartinfer22/dexian-fed-challange/assets/66142507/5f6ecb52-54e5-4650-adf2-89e7f44fd600)
+
+
 Este projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli) na versão 17.3.6.
 
 ## Servidor de Desenvolvimento
