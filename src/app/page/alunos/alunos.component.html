@@ -40,7 +40,7 @@
               <div>
                 <span>CPF: </span>
                 <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.scpf }}</span>
-                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.scpf" type="text" class="font-medium p-1 rounded-xl">
+                <input pInputText *ngIf="aluno.editando" mask="000.000.000-00"[(ngModel)]="aluno.scpf" type="text" class="font-medium p-1 rounded-xl">
               </div>
               <div>
                 <span>Endereço: </span>
@@ -84,28 +84,28 @@
   <form (ngSubmit)="cadastrarAluno()" #form="ngForm">
     <span class="p-text-secondary block mb-5">Preencha as informações do aluno.</span>
     <div class="pb-10">
-      <div class="flex align-items-center gap-3 mb-3">
-        <label for="nome" class="font-semibold w-6rem">Nome</label>
+      <div class="flex align-items-center gap-2 mb-3">
+        <label for="nome" class="font-semibold">Nome</label>
         <input pInputText id="nome" class="flex-auto" [(ngModel)]="novoAluno.sNome" name="nome" autocomplete="off" required />
       </div>
-      <div class="flex align-items-center gap-3 mb-5">
-        <label for="dataNascimento" class="font-semibold w-6rem">Data de Nascimento</label>
+      <div class="flex align-items-center gap-2 mb-5">
+        <label for="dataNascimento" class="font-semibold">Data de Nascimento</label>
         <input pInputText id="dataNascimento" class="flex-auto" [(ngModel)]="novoAluno.dNascimento" name="dataNascimento" type="date" autocomplete="off" required />
       </div>
-      <div class="flex align-items-center gap-3 mb-3">
-        <label for="cpf" class="font-semibold w-6rem">CPF</label>
-        <input pInputText id="cpf" class="flex-auto" [(ngModel)]="novoAluno.scpf" name="cpf" autocomplete="off" required />
+      <div class="flex align-items-center gap-2 mb-3">
+        <label for="cpf" class="font-semibold">CPF</label>
+        <input pInputText id="cpf" class="flex-auto" [(ngModel)]="novoAluno.scpf" mask="000.000.000-00" name="cpf" autocomplete="off" required />
       </div>
-      <div class="flex align-items-center gap-3 mb-5">
-        <label for="endereco" class="font-semibold w-6rem">Endereço</label>
+      <div class="flex align-items-center gap-2 mb-5">
+        <label for="endereco" class="font-semibold">Endereço</label>
         <input pInputText id="endereco" class="flex-auto" [(ngModel)]="novoAluno.sEndereco" name="endereco" autocomplete="off" required />
       </div>
-      <div class="flex align-items-center gap-3 mb-3">
-        <label for="celular" class="font-semibold w-6rem">Celular</label>
+      <div class="flex align-items-center gap-2 mb-3">
+        <label for="celular" class="font-semibold">Celular</label>
         <input pInputText id="celular" class="flex-auto" [(ngModel)]="novoAluno.sCelular" name="celular" autocomplete="off" required />
       </div>
-      <div class="flex align-items-center gap-3 mb-5">
-        <label for="codEscola" class="font-semibold w-6rem">Código da Escola</label>
+      <div class="flex align-items-center gap-2 mb-5">
+        <label for="codEscola" class="font-semibold">Código da Escola</label>
         <input pInputText id="codEscola" class="flex-auto" [(ngModel)]="novoAluno.iCodEscola" name="codEscola" type="number" autocomplete="off" required />
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, InjectionToken, OnInit} from '@angular/core';
 import { Aluno } from "../../shared/model/aluno.interface";
 import { AlunoService } from "../../shared/service/aluno.service";
 import { ConfirmationService, MessageService } from "primeng/api";
@@ -13,6 +13,7 @@ import {AvatarModule} from "primeng/avatar";
 import {FilterAlunoPipe} from "../../shared/pipe/filter-aluno.pipe";
 import {DataViewModule} from "primeng/dataview";
 import {HeaderComponent} from "../../component/header/header.component";
+import {NgxMaskDirective, NgxMaskService} from "ngx-mask";
 
 @Component({
   selector: 'app-alunos',
@@ -30,7 +31,8 @@ import {HeaderComponent} from "../../component/header/header.component";
     FilterAlunoPipe,
     DataViewModule,
     HeaderComponent,
-    NgForOf
+    NgForOf,
+    NgxMaskDirective
   ],
   standalone: true,
   providers: [MessageService, ConfirmationService]
@@ -61,6 +63,9 @@ export class AlunosComponent implements OnInit {
     this.alunosService.getAlunos().subscribe(alunos => {
       this.alunos = alunos;
     });
+    if (this.alunos.length == 0) {
+      this.mostrarMensagemNenhumResultado = true;
+    }
   }
 
   verificarResultados(): void {
@@ -120,9 +125,12 @@ export class AlunosComponent implements OnInit {
 
   cadastrarAluno(): void {
     this.alunosService.addAluno(this.novoAluno).subscribe(() => {
-      this.getAlunos(); // Atualiza a lista após adicionar o novo aluno
+      this.getAlunos();
       this.fecharDialog();
       this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno cadastrado com sucesso' });
+    }, error => {
+      let errorMessage = Object.values(error.error.errors)[0] as string;
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: errorMessage  });
     });
   }
 

@@ -57,6 +57,9 @@ export class EscolasComponent implements OnInit {
     this.escolaService.getEscolas().subscribe(escolas => {
       this.escolas = escolas;
     });
+    if (this.escolas.length == 0) {
+      this.mostrarMensagemNenhumResultado = true;
+    }
   }
 
   verificarResultados(): void {
@@ -115,7 +118,7 @@ export class EscolasComponent implements OnInit {
 
   cadastrarEscola(): void {
     this.escolaService.addEscola(this.novaEscola).subscribe(() => {
-      this.getEscolas(); // Atualiza a lista após adicionar a nova escola
+      this.getEscolas();
       this.fecharDialog();
       this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola cadastrada com sucesso' });
     });
