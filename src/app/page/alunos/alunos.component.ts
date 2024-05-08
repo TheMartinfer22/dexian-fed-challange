@@ -1,41 +1,13 @@
-import {Component, OnInit, WritableSignal} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Aluno } from "../../shared/model/aluno.interface";
 import { AlunoService } from "../../shared/service/aluno.service";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {ButtonModule} from "primeng/button";
-import {AvatarModule} from "primeng/avatar";
-import {DataViewModule} from "primeng/dataview";
-import {HeaderComponent} from "../../component/header/header.component";
-import {FilterAlunoPipe} from "../../shared/pipe/filter-aluno.pipe";
-import {MenuComponent} from "../../component/menu/menu.component";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ToastModule} from "primeng/toast";
-import {ConfirmationService, MessageService} from "primeng/api";
-import {DialogModule} from "primeng/dialog";
-import {ChipsModule} from "primeng/chips";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-alunos',
   templateUrl: './alunos.component.html',
   standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    ButtonModule,
-    AvatarModule,
-    DataViewModule,
-    HeaderComponent,
-    NgForOf,
-    DatePipe,
-    FilterAlunoPipe,
-    MenuComponent,
-    ConfirmDialogModule,
-    ToastModule,
-    DialogModule,
-    ChipsModule
-  ],
-  providers: [ConfirmationService, MessageService]
+  styleUrls: ['./alunos.component.css']
 })
 export class AlunosComponent implements OnInit {
   alunos: Aluno[] = [];
@@ -56,7 +28,13 @@ export class AlunosComponent implements OnInit {
   constructor(private alunosService: AlunoService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.alunos = this.alunosService.getAlunos();
+    this.getAlunos();
+  }
+
+  getAlunos(): void {
+    this.alunosService.getAlunos().subscribe(alunos => {
+      this.alunos = alunos;
+    });
   }
 
   verificarResultados(): void {
@@ -76,6 +54,9 @@ export class AlunosComponent implements OnInit {
 
   salvarAluno(aluno: Aluno): void {
     aluno.editando = false;
+    this.alunosService.updateAluno(aluno.iCodAluno, aluno).subscribe(() => {
+      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno atualizado com sucesso' });
+    });
   }
 
   deleteAlunoConfirm($event: MouseEvent, aluno: Aluno) {
@@ -101,9 +82,10 @@ export class AlunosComponent implements OnInit {
   }
 
   deleteAluno(aluno: Aluno): void {
-    this.alunosService.deleteAluno(aluno.iCodAluno);
-    this.alunos = this.alunos.filter(a => a.iCodAluno !== aluno.iCodAluno);
-    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno deletado com sucesso' });
+    this.alunosService.deleteAluno(aluno.iCodAluno).subscribe(() => {
+      this.alunos = this.alunos.filter(a => a.iCodAluno !== aluno.iCodAluno);
+      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno deletado com sucesso' });
+    });
   }
 
   cadastrarAlunoDialog() {
@@ -111,11 +93,23 @@ export class AlunosComponent implements OnInit {
   }
 
   cadastrarAluno(): void {
-    this.alunos.push(this.novoAluno)
-    this.fecharDialog();
+    this.alunosService.addAluno(this.novoAluno).subscribe(() => {
+      this.getAlunos(); // Atualiza a lista após adicionar o novo aluno
+      this.fecharDialog();
+      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno cadastrado com sucesso' });
+    });
   }
 
   fecharDialog() {
     this.visible = false;
+    this.novoAluno = {
+      iCodAluno: 0,
+      sNome: '',
+      dNascimento: new Date(),
+      sCPF: '',
+      sEndereco: '',
+      sCelular: '',
+      iCodEscola: 0
+    };
   }
 }
