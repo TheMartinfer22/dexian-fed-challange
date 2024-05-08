@@ -74,23 +74,6 @@ export class AlunosComponent implements OnInit {
     ).length === 0;
   }
 
-  editarAluno(aluno: Aluno): void {
-    aluno.editando = true;
-  }
-
-  cancelarEdicao(aluno: Aluno): void {
-    aluno.editando = false;
-  }
-
-  salvarAluno(aluno: Aluno): void {
-    if (aluno.iCodAluno) {
-      aluno.editando = false;
-      this.alunosService.updateAluno(aluno.iCodAluno, aluno).subscribe(() => {
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno atualizado com sucesso' });
-      });
-    }
-  }
-
   deleteAlunoConfirm($event: MouseEvent, aluno: Aluno) {
     const eventTarget = $event.target;
     if (eventTarget) {
@@ -122,19 +105,49 @@ export class AlunosComponent implements OnInit {
     }
   }
 
-  cadastrarAlunoDialog() {
+  editarAlunoDialog(aluno: Aluno) {
+    this.novoAluno = {
+      iCodAluno: aluno.iCodAluno,
+      sNome: aluno.sNome,
+      dNascimento: aluno.dNascimento,
+      scpf: aluno.scpf,
+      sEndereco: aluno.sEndereco,
+      sCelular: aluno.sCelular,
+      iCodEscola: aluno.iCodEscola
+    };
     this.visible = true;
   }
 
-  cadastrarAluno(): void {
-    this.alunosService.addAluno(this.novoAluno).subscribe(() => {
-      this.getAlunos();
-      this.fecharDialog();
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno cadastrado com sucesso' });
-    }, error => {
-      let errorMessage = Object.values(error.error.errors)[0] as string;
-      this.messageService.add({ severity: 'error', summary: 'Erro', detail: errorMessage  });
-    });
+  cadastrarAlunoDialog() {
+    this.novoAluno = {
+      iCodAluno: 0,
+      sNome: '',
+      dNascimento: new Date(),
+      scpf: '',
+      sEndereco: '',
+      sCelular: '',
+      iCodEscola: 0
+    };
+    this.visible = true;
+  }
+
+  salvarAluno(): void {
+    if (this.novoAluno.iCodAluno !== 0 && this.novoAluno.iCodAluno) {
+      this.alunosService.updateAluno(this.novoAluno.iCodAluno, this.novoAluno).subscribe(() => {
+        this.getAlunos();
+        this.fecharDialog();
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno atualizado com sucesso' });
+      });
+    } else {
+      this.alunosService.addAluno(this.novoAluno).subscribe(() => {
+        this.getAlunos();
+        this.fecharDialog();
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno cadastrado com sucesso' });
+      }, error => {
+        let errorMessage = Object.values(error.error.errors)[0] as string;
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: errorMessage  });
+      });
+    }
   }
 
   fecharDialog() {

@@ -6,5 +6,4 @@ export interface Aluno {
   sEndereco: string;
   sCelular: string;
   iCodEscola: number;
-  editando?: boolean;
 }

@@ -31,44 +31,34 @@
               </div>
               <div class="flex gap-2">
                 <span>Nome: </span>
-                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sNome }}</span>
-                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sNome" type="text" class="font-medium p-1 rounded-xl">
+                <span class="font-medium">{{ aluno.sNome }}</span>
               </div>
               <div class="flex gap-2">
                 <span>Data de Nascimento: </span>
-                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.dNascimento | date }}</span>
-                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.dNascimento" type="date" class="font-medium p-1 rounded-xl">
+                <span class="font-medium">{{ aluno.dNascimento | date }}</span>
               </div>
             </div>
             <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-1">
               <div>
                 <span>CPF: </span>
-                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.scpf }}</span>
-                <input pInputText *ngIf="aluno.editando" mask="000.000.000-00"[(ngModel)]="aluno.scpf" type="text" class="font-medium p-1 rounded-xl">
+                <span class="font-medium">{{ aluno.scpf }}</span>
               </div>
               <div>
                 <span>Endereço: </span>
-                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sEndereco }}</span>
-                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sEndereco" type="text" class="font-medium p-1 rounded-xl">
+                <span class="font-medium">{{ aluno.sEndereco }}</span>
               </div>
               <div>
                 <span>Celular: </span>
-                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sCelular }}</span>
-                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sCelular" type="text" class="font-medium p-1 rounded-xl">
+                <span class="font-medium">{{ aluno.sCelular }}</span>
               </div>
             </div>
             <div class="flex gap-2 p-1">
               <span>Código da Escola: </span>
-              <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.iCodEscola }}</span>
-              <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.iCodEscola" type="number" class="font-medium p-1 rounded-xl">
+              <span class="font-medium">{{ aluno.iCodEscola }}</span>
             </div>
             <div class="flex gap-2 p-2">
-              <p-button *ngIf="!aluno.editando" (click)="editarAluno(aluno)" class="me-3 text-yellow-700" icon="pi pi-pencil" label="Editar"></p-button>
-              <p-button *ngIf="!aluno.editando" class="text-red-700" icon="pi pi-trash" label="Excluir" (click)="deleteAlunoConfirm($event, aluno)"></p-button>
-              <div *ngIf="aluno.editando">
-                <p-button (click)="salvarAluno(aluno)" class="me-3 text-green-700" icon="pi pi-check" label="Salvar"></p-button>
-                <p-button (click)="cancelarEdicao(aluno)" class="text-red-700" icon="pi pi-times" label="Cancelar"></p-button>
-              </div>
+              <p-button (click)="editarAlunoDialog(aluno)" class="me-3 text-yellow-700" icon="pi pi-pencil" label="Editar"></p-button>
+              <p-button class="text-red-700" icon="pi pi-trash" label="Excluir" (click)="deleteAlunoConfirm($event, aluno)"></p-button>
             </div>
           </div>
         </div>
@@ -85,7 +75,7 @@
   [(visible)]="visible"
   [modal]="true"
   [style]="{ width: '25rem' }">
-  <form (ngSubmit)="cadastrarAluno()" #form="ngForm">
+  <form (ngSubmit)="salvarAluno()" #form="ngForm">
     <span class="p-text-secondary block mb-5">Preencha as informações do aluno.</span>
     <div class="pb-10">
       <div class="flex align-items-center gap-2 mb-3">
@@ -95,7 +85,7 @@
       <div class="flex align-items-center gap-2 mb-5">
         <label for="dataNascimento" class="font-semibold">Data de Nascimento</label>
         <input pInputText id="dataNascimento" class="flex-auto" [(ngModel)]="novoAluno.dNascimento" name="dataNascimento" type="date" autocomplete="off" required />
-      </div>
+      </div>/
       <div class="flex align-items-center gap-2 mb-3">
         <label for="cpf" class="font-semibold">CPF</label>
         <input pInputText id="cpf" class="flex-auto" [(ngModel)]="novoAluno.scpf" mask="000.000.000-00" name="cpf" autocomplete="off" required />
