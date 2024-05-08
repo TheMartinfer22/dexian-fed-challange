@@ -15,7 +15,7 @@ export class FilterAlunoPipe implements PipeTransform {
     search = search.toLowerCase();
 
     return alunos.filter(aluno =>
-      aluno.sCPF.toLowerCase().includes(search) ||
+      aluno.scpf.toLowerCase().includes(search) ||
       aluno.sNome.toLowerCase().includes(search)
     );
   }

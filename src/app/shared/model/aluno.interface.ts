@@ -2,7 +2,7 @@ export interface Aluno {
   iCodAluno: number;
   sNome: string;
   dNascimento: Date;
-  sCPF: string;
+  scpf: string;
   sEndereco: string;
   sCelular: string;
   iCodEscola: number;

@@ -2,12 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { Aluno } from "../../shared/model/aluno.interface";
 import { AlunoService } from "../../shared/service/aluno.service";
 import { ConfirmationService, MessageService } from "primeng/api";
+import {MenuComponent} from "../../component/menu/menu.component";
+import {ToastModule} from "primeng/toast";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DialogModule} from "primeng/dialog";
+import {FormsModule} from "@angular/forms";
+import {ChipsModule} from "primeng/chips";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {AvatarModule} from "primeng/avatar";
+import {FilterAlunoPipe} from "../../shared/pipe/filter-aluno.pipe";
+import {DataViewModule} from "primeng/dataview";
+import {HeaderComponent} from "../../component/header/header.component";
 
 @Component({
   selector: 'app-alunos',
   templateUrl: './alunos.component.html',
+  imports: [
+    MenuComponent,
+    ToastModule,
+    ConfirmDialogModule,
+    DialogModule,
+    FormsModule,
+    ChipsModule,
+    NgIf,
+    DatePipe,
+    AvatarModule,
+    FilterAlunoPipe,
+    DataViewModule,
+    HeaderComponent,
+    NgForOf
+  ],
   standalone: true,
-  styleUrls: ['./alunos.component.css']
+  providers: [MessageService, ConfirmationService]
 })
 export class AlunosComponent implements OnInit {
   alunos: Aluno[] = [];
@@ -19,7 +45,7 @@ export class AlunosComponent implements OnInit {
     iCodAluno: 0,
     sNome: '',
     dNascimento: new Date(),
-    sCPF: '',
+    scpf: '',
     sEndereco: '',
     sCelular: '',
     iCodEscola: 0
@@ -39,7 +65,7 @@ export class AlunosComponent implements OnInit {
 
   verificarResultados(): void {
     this.mostrarMensagemNenhumResultado = this.alunos.filter(aluno =>
-      aluno.sCPF.toLowerCase().includes(this.pesquisarAlunos.toLowerCase()) ||
+      aluno.scpf.toLowerCase().includes(this.pesquisarAlunos.toLowerCase()) ||
       aluno.sNome.toLowerCase().includes(this.pesquisarAlunos.toLowerCase())
     ).length === 0;
   }
@@ -106,7 +132,7 @@ export class AlunosComponent implements OnInit {
       iCodAluno: 0,
       sNome: '',
       dNascimento: new Date(),
-      sCPF: '',
+      scpf: '',
       sEndereco: '',
       sCelular: '',
       iCodEscola: 0

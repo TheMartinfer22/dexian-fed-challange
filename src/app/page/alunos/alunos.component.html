@@ -39,8 +39,8 @@
             <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-1">
               <div>
                 <span>CPF: </span>
-                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sCPF }}</span>
-                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sCPF" type="text" class="font-medium p-1 rounded-xl">
+                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.scpf }}</span>
+                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.scpf" type="text" class="font-medium p-1 rounded-xl">
               </div>
               <div>
                 <span>Endereço: </span>
@@ -94,7 +94,7 @@
       </div>
       <div class="flex align-items-center gap-3 mb-3">
         <label for="cpf" class="font-semibold w-6rem">CPF</label>
-        <input pInputText id="cpf" class="flex-auto" [(ngModel)]="novoAluno.sCPF" name="cpf" autocomplete="off" required />
+        <input pInputText id="cpf" class="flex-auto" [(ngModel)]="novoAluno.scpf" name="cpf" autocomplete="off" required />
       </div>
       <div class="flex align-items-center gap-3 mb-5">
         <label for="endereco" class="font-semibold w-6rem">Endereço</label>

@@ -2,12 +2,39 @@ import { Component, OnInit } from '@angular/core';
 import { Escola } from "../../shared/model/escola.interface";
 import { EscolaService } from "../../shared/service/escola.service";
 import { ConfirmationService, MessageService } from "primeng/api";
+import {ButtonModule} from "primeng/button";
+import {ChipsModule} from "primeng/chips";
+import {FormsModule} from "@angular/forms";
+import {NgForOf, NgIf} from "@angular/common";
+import {MenuComponent} from "../../component/menu/menu.component";
+import {ToastModule} from "primeng/toast";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {AvatarModule} from "primeng/avatar";
+import {FilterEscolaPipe} from "../../shared/pipe/filter-escola.pipe";
+import {DataViewModule} from "primeng/dataview";
+import {DialogModule} from "primeng/dialog";
+import {HeaderComponent} from "../../component/header/header.component";
 
 @Component({
   selector: 'app-escolas',
   templateUrl: './escolas.component.html',
+  imports: [
+    ButtonModule,
+    ChipsModule,
+    FormsModule,
+    NgIf,
+    MenuComponent,
+    ToastModule,
+    ConfirmDialogModule,
+    AvatarModule,
+    FilterEscolaPipe,
+    DataViewModule,
+    DialogModule,
+    HeaderComponent,
+    NgForOf
+  ],
   standalone: true,
-  styleUrls: ['./escolas.component.css']
+  providers: [MessageService, ConfirmationService]
 })
 export class EscolasComponent implements OnInit {
   escolas: Escola[] = [];

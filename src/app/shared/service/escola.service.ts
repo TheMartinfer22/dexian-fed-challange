@@ -7,7 +7,7 @@ import { Escola } from '../model/escola.interface';
   providedIn: 'root'
 })
 export class EscolaService {
-  apiUrl = 'http://localhost:8080/api/v1/escolas';
+  apiUrl = 'http://localhost:5290/api/v1/escolas';
 
   constructor(private http: HttpClient) { }
 
