@@ -1,0 +1,20 @@
+<div class="flex justify-center h-screen items-center w-full bg-purple-100">
+  <div class="bg-dexian-purple md:block flex flex-col justify-center h-full md:h-fit p-10 md:rounded-2xl md:shadow-2xl md:w-96 w-full">
+    <div>
+      <h1 class="text-3xl font-bold">Faça seu Login</h1>
+      <span>Dexian Challange </span><span class="text-dexian-purple3 font-bold">| Fullstack</span>
+    </div>
+    <div class="mt-5">
+      <form class="flex flex-col" #loginForm="ngForm">
+        <input required [(ngModel)]="loginForm.value.username" name="username" type="text" placeholder="Insira seu nome de usuário" class="rounded-2xl w-full p-3">
+        <span *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)" class="text-red-500 mt-2">Nome de usuário é obrigatório</span>
+        <input required [(ngModel)]="loginForm.value.password" name="password" type="password" placeholder="Insira sua senha" class="rounded-2xl w-full p-3 mt-5">
+        <span *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)" class="text-red-500 mt-2">Senha é obrigatória</span>
+      </form>
+    </div>
+    <div class="mt-5">
+      <button type="submit" class="bg-dexian-purple3 pt-3 pb-3 w-full rounded-2xl text-white shadow-2xl" (click)="doLogin()" >Entrar</button>
+      <span *ngIf="errorMessage" class="text-red-500 mt-2">{{errorMessage}}</span>
+    </div>
+  </div>
+</div>

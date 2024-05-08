@@ -1,0 +1,66 @@
+<app-header></app-header>
+<div class="flex justify-center md:mt-20 items-center w-full mb-10 md:mb-0">
+  <div class="md:block flex flex-col  md:h-fit p-10 md:w-1/2 w-screen">
+    <div>
+      <h1 class="text-3xl">Alunos cadastrados</h1>
+      <h1 class="text-xl font-light">Aqui você pode administrar os alunos do sistema.</h1>
+    </div>
+    <div class="mt-2">
+        <span class="p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <input [(ngModel)]="pesquisarAlunos" (input)="verificarResultados()" type="text" class="p-2 rounded-2xl pe-20" pInputText placeholder="Pesquise um aluno (Nome, CPF)..."/>
+        </span>
+    </div>
+    <div class="mt-2">
+      <p-button icon="pi pi-plus" class="text-green-700 font-bold" label="Cadastrar Aluno"></p-button>
+    </div>
+    <div *ngIf="mostrarMensagemNenhumResultado" class="mt-4 w-fit">
+      <p class="font-bold text-xl">Nenhum resultado foi encontrado...</p>
+    </div>
+    <p-dataView [value]="alunos" *ngIf="!mostrarMensagemNenhumResultado">
+      <ng-template pTemplate="list">
+        <div class="md:border-none border-[1px] border-b-black grid md:grid-cols-12 gap-4 border-t border-gray-200 p-4 bg-dexian-purple-light" *ngFor="let aluno of alunos | filterAluno: pesquisarAlunos">
+          <div class="flex justify-center items-center">
+            <p-avatar [label]="aluno.sNome.at(0)" size="xlarge" [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"></p-avatar>
+          </div>
+          <div class="col-span-9 flex flex-col justify-between font-bold">
+            <div class="flex flex-col sm:flex-row gap-3 p-1">
+              <div>
+                <span>Nome: </span>
+                <span class="font-medium">{{ aluno.sNome }}</span>
+              </div>
+              <div class="flex gap-2">
+                <span>Data de Nascimento: </span>
+                <span class="font-medium">{{ aluno.dNascimento | date }}</span>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-1">
+              <div>
+                <span>CPF: </span>
+                <span class="font-medium">{{ aluno.sCPF }}</span>
+              </div>
+              <div>
+                <span>Endereço: </span>
+                <span class="font-medium">{{ aluno.sEndereco }}</span>
+              </div>
+              <div>
+                <span>Celular: </span>
+                <span class="font-medium">{{ aluno.sCelular }}</span>
+              </div>
+            </div>
+            <div class="flex gap-2 p-1">
+              <span>Código da Escola: </span>
+              <span class="font-medium">{{ aluno.iCodEscola }}</span>
+            </div>
+
+            <div class="flex gap-2 p-2">
+              <p-button class="me-3 text-yellow-700" icon="pi pi-pencil" label="Alterar"></p-button>
+              <p-button class="text-red-700" icon="pi pi-trash" label="Excluir"></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+</div>
+<app-menu></app-menu>

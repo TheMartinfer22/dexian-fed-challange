@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {HeaderComponent} from "./component/header/header.component";
+import {MenuComponent} from "./component/menu/menu.component";
+import {StyleClassModule} from "primeng/styleclass";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent, MenuComponent, StyleClassModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

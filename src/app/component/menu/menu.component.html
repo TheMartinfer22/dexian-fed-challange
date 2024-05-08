@@ -1,0 +1,16 @@
+<div class="md:hidden flex fixed bottom-0 left-0 right-0 z-50 bg-purple-200 rounded-t-xl pt-2 pb-2">
+  <div class="flex justify-around w-full">
+    <button (click)="this.router.navigate(['alunos'])" class="flex flex-col items-center p-2" [ngClass]="{'text-purple-700': this.router.isActive('/alunos', true)}">
+      <i class="pi pi-users text-2xl"></i>
+      <span class="text-xs mt-1">Alunos</span>
+    </button>
+    <button (click)="this.router.navigate(['escolas'])" class="flex flex-col items-center p-2" [ngClass]="{'text-purple-700': this.router.isActive('/escolas', true)}">
+      <i class="pi pi-graduation-cap text-2xl"></i>
+      <span class="text-xs mt-1">Escolas</span>
+    </button>
+    <button (click)="this.router.navigate([''])" class="flex flex-col items-center p-2">
+      <i class="pi pi-sign-out text-2xl"></i>
+      <span class="text-xs mt-1">Sair</span>
+    </button>
+  </div>
+</div>

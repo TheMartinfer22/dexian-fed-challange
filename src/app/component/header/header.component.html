@@ -1,0 +1,11 @@
+<header class="p-10 hidden md:block">
+  <div class="flex items-center md:justify-around">
+    <div>
+      <p-button (click)="this.router.navigate(['alunos'])"  class="pe-3 ps-3 pt-2 pb-2 me-2 rounded-xl" icon="pi pi-users" label="Alunos" [ngClass]="{'bg-black text-white': this.router.isActive('/alunos', true)}"></p-button>
+      <p-button (click)="this.router.navigate(['escolas'])"  class="pe-3 ps-3 pt-2 pb-2 me-2 rounded-xl" icon="pi pi-graduation-cap" label="Escolas" [ngClass]="{'bg-black text-white': this.router.isActive('/escolas', true)}"></p-button>
+    </div>
+    <div>
+      <p-button (click)="this.router.navigate([''])"  class="bg-black text-white pe-3 ps-3 pt-2 pb-2 me-2 rounded-xl" icon="pi pi-sign-out"></p-button>
+    </div>
+  </div>
+</header>
