@@ -62,19 +62,13 @@
       </div>
     </div>
     <div>
-      <p-button
-        label="Cancelar"
-        [text]="true"
+      <button
         class="bg-red-700 pe-4 ps-4 pt-3 pb-3 text-white rounded-xl me-2"
-        severity="secondary"
-        (click)="fecharDialog()" />
-      <p-button
+        (click)="fecharDialog()">Cancelar</button>
+      <button
         type="submit"
-        label="Salvar"
         class="bg-green-700 pe-4 ps-4 pt-3 pb-3 text-white rounded-xl"
-        [outlined]="true"
-        severity="secondary"
-        [disabled]="!form.valid" />
+        [disabled]="!form.valid">Salvar</button>
     </div>
   </form>
 </p-dialog>
