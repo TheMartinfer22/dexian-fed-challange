@@ -26,9 +26,8 @@
           <div class="col-span-9 flex flex-col justify-between font-bold">
             <div class="flex flex-col sm:flex-row gap-3 p-1">
               <div>
-                <span>Identificação: </span>
-                <span *ngIf="!escola.editando" class="font-medium">{{ escola.iCodEscola }}</span>
-                <input required pInputText *ngIf="escola.editando" [(ngModel)]="escola.iCodEscola" type="number"  class="font-medium p-1 rounded-xl">
+                <span>Código da Escola: </span>
+                <span class="font-medium">{{ escola.iCodEscola }}</span>
               </div>
               <div class="flex gap-2">
                 <span>Descrição: </span>
@@ -62,10 +61,6 @@
   <form (ngSubmit)="cadastrarEscola()" #form="ngForm">
     <span class="p-text-secondary block mb-5">Preencha as informações da escola.</span>
     <div class="pb-10">
-      <div class="flex align-items-center gap-2 mb-5">
-        <label for="codEscola" class="font-semibold">Código da Escola</label>
-        <input pInputText id="codEscola" class="flex-auto" [(ngModel)]="novaEscola.iCodEscola" name="codEscola" type="number" autocomplete="off" required />
-      </div>
       <div class="flex align-items-center gap-2 mb-3">
         <label for="descricao" class="font-semibold">Descrição</label>
         <input pInputText id="descricao" class="flex-auto" [(ngModel)]="novaEscola.sDescricao" name="descricao" autocomplete="off" required />

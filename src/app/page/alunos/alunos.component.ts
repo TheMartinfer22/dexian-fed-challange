@@ -44,7 +44,6 @@ export class AlunosComponent implements OnInit {
   visible: boolean = false;
 
   novoAluno: Aluno = {
-    iCodAluno: 0,
     sNome: '',
     dNascimento: new Date(),
     scpf: '',
@@ -62,10 +61,10 @@ export class AlunosComponent implements OnInit {
   getAlunos(): void {
     this.alunosService.getAlunos().subscribe(alunos => {
       this.alunos = alunos;
+      if (this.alunos.length == 0) {
+        this.mostrarMensagemNenhumResultado = true;
+      }
     });
-    if (this.alunos.length == 0) {
-      this.mostrarMensagemNenhumResultado = true;
-    }
   }
 
   verificarResultados(): void {
@@ -84,10 +83,12 @@ export class AlunosComponent implements OnInit {
   }
 
   salvarAluno(aluno: Aluno): void {
-    aluno.editando = false;
-    this.alunosService.updateAluno(aluno.iCodAluno, aluno).subscribe(() => {
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno atualizado com sucesso' });
-    });
+    if (aluno.iCodAluno) {
+      aluno.editando = false;
+      this.alunosService.updateAluno(aluno.iCodAluno, aluno).subscribe(() => {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno atualizado com sucesso' });
+      });
+    }
   }
 
   deleteAlunoConfirm($event: MouseEvent, aluno: Aluno) {
@@ -113,10 +114,12 @@ export class AlunosComponent implements OnInit {
   }
 
   deleteAluno(aluno: Aluno): void {
-    this.alunosService.deleteAluno(aluno.iCodAluno).subscribe(() => {
-      this.alunos = this.alunos.filter(a => a.iCodAluno !== aluno.iCodAluno);
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno deletado com sucesso' });
-    });
+    if (aluno.iCodAluno) {
+      this.alunosService.deleteAluno(aluno.iCodAluno).subscribe(() => {
+        this.alunos = this.alunos.filter(a => a.iCodAluno !== aluno.iCodAluno);
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Aluno deletado com sucesso' });
+      });
+    }
   }
 
   cadastrarAlunoDialog() {

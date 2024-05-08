@@ -43,7 +43,6 @@ export class EscolasComponent implements OnInit {
   visible: boolean = false;
 
   novaEscola: Escola = {
-    iCodEscola: 0,
     sDescricao: ''
   };
 
@@ -56,10 +55,10 @@ export class EscolasComponent implements OnInit {
   getEscolas(): void {
     this.escolaService.getEscolas().subscribe(escolas => {
       this.escolas = escolas;
+      if (this.escolas.length == 0) {
+        this.mostrarMensagemNenhumResultado = true;
+      }
     });
-    if (this.escolas.length == 0) {
-      this.mostrarMensagemNenhumResultado = true;
-    }
   }
 
   verificarResultados(): void {
@@ -77,10 +76,12 @@ export class EscolasComponent implements OnInit {
   }
 
   salvarEscola(escola: Escola): void {
-    escola.editando = false;
-    this.escolaService.updateEscola(escola.iCodEscola, escola).subscribe(() => {
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola atualizada com sucesso' });
-    });
+    if (escola.iCodEscola) {
+      escola.editando = false;
+      this.escolaService.updateEscola(escola.iCodEscola, escola).subscribe(() => {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola atualizada com sucesso' });
+      });
+    }
   }
 
   deleteEscolaConfirm($event: MouseEvent, escola: Escola): void {
@@ -106,10 +107,12 @@ export class EscolasComponent implements OnInit {
   }
 
   deleteEscola(escola: Escola): void {
-    this.escolaService.deleteEscola(escola.iCodEscola).subscribe(() => {
-      this.escolas = this.escolas.filter(a => a.iCodEscola !== escola.iCodEscola);
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola deletada com sucesso' });
-    });
+    if (escola.iCodEscola) {
+      this.escolaService.deleteEscola(escola.iCodEscola).subscribe(() => {
+        this.escolas = this.escolas.filter(a => a.iCodEscola !== escola.iCodEscola);
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola deletada com sucesso' });
+      });
+    }
   }
 
   cadastrarEscolaDialog(): void {

@@ -26,6 +26,10 @@
           <div class="col-span-9 flex flex-col justify-between font-bold">
             <div class="flex flex-col sm:flex-row gap-3 p-1">
               <div>
+                <span>Código do Aluno: </span>
+                <span class="font-medium">{{ aluno.iCodAluno }}</span>
+              </div>
+              <div class="flex gap-2">
                 <span>Nome: </span>
                 <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sNome }}</span>
                 <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sNome" type="text" class="font-medium p-1 rounded-xl">

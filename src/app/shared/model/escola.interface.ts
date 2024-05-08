@@ -1,5 +1,5 @@
 export interface Escola {
-  iCodEscola: number;
+  iCodEscola?: number;
   sDescricao: string;
   editando?: boolean;
 }

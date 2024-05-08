@@ -1,5 +1,5 @@
 export interface Aluno {
-  iCodAluno: number;
+  iCodAluno?: number;
   sNome: string;
   dNascimento: Date;
   scpf: string;
