@@ -45,7 +45,7 @@ export class AlunosComponent implements OnInit {
 
   novoAluno: Aluno = {
     sNome: '',
-    dataNascimento: new Date(),
+    dataNascimento: new Date().toISOString().split('T')[0],
     scpf: '',
     sEndereco: '',
     sCelular: '',
@@ -122,7 +122,7 @@ export class AlunosComponent implements OnInit {
     this.novoAluno = {
       iCodAluno: 0,
       sNome: '',
-      dataNascimento: new Date(),
+      dataNascimento: new Date().toISOString().split('T')[0],
       scpf: '',
       sEndereco: '',
       sCelular: '',
@@ -155,7 +155,7 @@ export class AlunosComponent implements OnInit {
     this.novoAluno = {
       iCodAluno: 0,
       sNome: '',
-      dataNascimento: new Date(),
+      dataNascimento: new Date().toISOString().split('T')[0],
       scpf: '',
       sEndereco: '',
       sCelular: '',
