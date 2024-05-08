@@ -28,3 +28,8 @@ Execute `ng e2e` para executar os testes end-to-end via uma plataforma de sua es
 ## Ajuda Adicional
 
 Para obter mais ajuda sobre o Angular CLI, use `ng help` ou consulte a página [Angular CLI Overview and Command Reference](https://angular.io/cli).
+
+
+## Spoiler...
+
+![image](https://github.com/TheMartinfer22/dexian-fed-challange/assets/66142507/68507e9f-41a6-406b-9ce1-83bdff0fb4c6)
