@@ -15,4 +15,8 @@ export class AlunoService {
   getAlunos(): Aluno[] {
     return this.alunos;
   }
+
+  deleteAluno(iCodAluno: number) {
+
+  }
 }

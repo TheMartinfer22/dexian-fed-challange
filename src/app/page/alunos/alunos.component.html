@@ -6,13 +6,13 @@
       <h1 class="text-xl font-light">Aqui você pode administrar os alunos do sistema.</h1>
     </div>
     <div class="mt-2">
-        <span class="p-input-icon-right">
+        <span class="p-input-icon-right md:w-[50%] w-full">
             <i class="pi pi-search"></i>
-            <input [(ngModel)]="pesquisarAlunos" (input)="verificarResultados()" type="text" class="p-2 rounded-2xl pe-20" pInputText placeholder="Pesquise um aluno (Nome, CPF)..."/>
+            <input [(ngModel)]="pesquisarAlunos" (input)="verificarResultados()" type="text" class="p-2 w-full rounded-2xl" pInputText placeholder="Pesquise um aluno (Nome, CPF)..."/>
         </span>
     </div>
-    <div class="mt-2">
-      <p-button icon="pi pi-plus" class="text-green-700 font-bold" label="Cadastrar Aluno"></p-button>
+    <div class="mt-4">
+      <p-button (click)="cadastrarAlunoDialog()" icon="pi pi-plus" class="text-green-700 font-bold" label="Cadastrar Aluno"></p-button>
     </div>
     <div *ngIf="mostrarMensagemNenhumResultado" class="mt-4 w-fit">
       <p class="font-bold text-xl">Nenhum resultado foi encontrado...</p>
@@ -27,35 +27,44 @@
             <div class="flex flex-col sm:flex-row gap-3 p-1">
               <div>
                 <span>Nome: </span>
-                <span class="font-medium">{{ aluno.sNome }}</span>
+                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sNome }}</span>
+                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sNome" type="text" class="font-medium p-1 rounded-xl">
               </div>
               <div class="flex gap-2">
                 <span>Data de Nascimento: </span>
-                <span class="font-medium">{{ aluno.dNascimento | date }}</span>
+                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.dNascimento | date }}</span>
+                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.dNascimento" type="date" class="font-medium p-1 rounded-xl">
               </div>
             </div>
             <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-1">
               <div>
                 <span>CPF: </span>
-                <span class="font-medium">{{ aluno.sCPF }}</span>
+                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sCPF }}</span>
+                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sCPF" type="text" class="font-medium p-1 rounded-xl">
               </div>
               <div>
                 <span>Endereço: </span>
-                <span class="font-medium">{{ aluno.sEndereco }}</span>
+                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sEndereco }}</span>
+                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sEndereco" type="text" class="font-medium p-1 rounded-xl">
               </div>
               <div>
                 <span>Celular: </span>
-                <span class="font-medium">{{ aluno.sCelular }}</span>
+                <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.sCelular }}</span>
+                <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.sCelular" type="text" class="font-medium p-1 rounded-xl">
               </div>
             </div>
             <div class="flex gap-2 p-1">
               <span>Código da Escola: </span>
-              <span class="font-medium">{{ aluno.iCodEscola }}</span>
+              <span *ngIf="!aluno.editando" class="font-medium">{{ aluno.iCodEscola }}</span>
+              <input pInputText *ngIf="aluno.editando" [(ngModel)]="aluno.iCodEscola" type="number" class="font-medium p-1 rounded-xl">
             </div>
-
             <div class="flex gap-2 p-2">
-              <p-button class="me-3 text-yellow-700" icon="pi pi-pencil" label="Alterar"></p-button>
-              <p-button class="text-red-700" icon="pi pi-trash" label="Excluir"></p-button>
+              <p-button *ngIf="!aluno.editando" (click)="editarAluno(aluno)" class="me-3 text-yellow-700" icon="pi pi-pencil" label="Editar"></p-button>
+              <p-button *ngIf="!aluno.editando" class="text-red-700" icon="pi pi-trash" label="Excluir" (click)="deleteAlunoConfirm($event, aluno)"></p-button>
+              <div *ngIf="aluno.editando">
+                <p-button (click)="salvarAluno(aluno)" class="me-3 text-green-700" icon="pi pi-check" label="Salvar"></p-button>
+                <p-button (click)="cancelarEdicao(aluno)" class="text-red-700" icon="pi pi-times" label="Cancelar"></p-button>
+              </div>
             </div>
           </div>
         </div>
@@ -64,3 +73,56 @@
   </div>
 </div>
 <app-menu></app-menu>
+<p-toast />
+<p-confirmDialog />
+
+<p-dialog
+  header="Cadastrar Aluno"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '25rem' }">
+  <form (ngSubmit)="cadastrarAluno()" #form="ngForm">
+    <span class="p-text-secondary block mb-5">Preencha as informações do aluno.</span>
+    <div class="pb-10">
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="nome" class="font-semibold w-6rem">Nome</label>
+        <input pInputText id="nome" class="flex-auto" [(ngModel)]="novoAluno.sNome" name="nome" autocomplete="off" required />
+      </div>
+      <div class="flex align-items-center gap-3 mb-5">
+        <label for="dataNascimento" class="font-semibold w-6rem">Data de Nascimento</label>
+        <input pInputText id="dataNascimento" class="flex-auto" [(ngModel)]="novoAluno.dNascimento" name="dataNascimento" type="date" autocomplete="off" required />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="cpf" class="font-semibold w-6rem">CPF</label>
+        <input pInputText id="cpf" class="flex-auto" [(ngModel)]="novoAluno.sCPF" name="cpf" autocomplete="off" required />
+      </div>
+      <div class="flex align-items-center gap-3 mb-5">
+        <label for="endereco" class="font-semibold w-6rem">Endereço</label>
+        <input pInputText id="endereco" class="flex-auto" [(ngModel)]="novoAluno.sEndereco" name="endereco" autocomplete="off" required />
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="celular" class="font-semibold w-6rem">Celular</label>
+        <input pInputText id="celular" class="flex-auto" [(ngModel)]="novoAluno.sCelular" name="celular" autocomplete="off" required />
+      </div>
+      <div class="flex align-items-center gap-3 mb-5">
+        <label for="codEscola" class="font-semibold w-6rem">Código da Escola</label>
+        <input pInputText id="codEscola" class="flex-auto" [(ngModel)]="novoAluno.iCodEscola" name="codEscola" type="number" autocomplete="off" required />
+      </div>
+    </div>
+    <div class="mt-5">
+      <p-button
+        label="Cancelar"
+        [text]="true"
+        class="bg-red-700 pe-4 ps-4 pt-3 pb-3 text-white rounded-xl me-2"
+        severity="secondary"
+        (click)="fecharDialog()" />
+      <p-button
+        type="submit"
+        label="Salvar"
+        class="bg-green-700 pe-4 ps-4 pt-3 pb-3 text-white rounded-xl"
+        [outlined]="true"
+        severity="secondary"
+        [disabled]="!form.valid" />
+    </div>
+  </form>
+</p-dialog>

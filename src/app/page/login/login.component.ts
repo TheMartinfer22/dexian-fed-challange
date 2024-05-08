@@ -29,7 +29,7 @@ export class LoginComponent {
 
   doLogin() {
     if (this.loginForm.valid) {
-      if (this.loginForm.value.username === 'a' && this.loginForm.value.password === 'b') {
+      if (this.loginForm.value.username === 'teste' && this.loginForm.value.password === '123') {
         sessionStorage.setItem('TOKEN', 'encrypted_in_en_us_token__mega_safe')
         this.router.navigate(['alunos']);
       } else {

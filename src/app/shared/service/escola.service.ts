@@ -21,4 +21,8 @@ export class EscolaService {
   getEscolas(): Escola[] {
     return this.escolas;
   }
+
+  deleteEscola(iCodEscola: number) {
+
+  }
 }
