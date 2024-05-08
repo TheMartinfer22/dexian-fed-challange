@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="mt-4">
-      <p-button icon="pi pi-plus" (click)="cadastrarEscolaDialog()"  class="text-green-700 font-bold" label="Cadastrar Escola"></p-button>
+      <p-button icon="pi pi-plus" (click)="cadastrarEscolaDialog()" class="text-green-700 font-bold" label="Cadastrar Escola"></p-button>
     </div>
     <div *ngIf="mostrarMensagemNenhumResultado" class="mt-4 w-fit">
       <p class="font-bold text-xl">Nenhum resultado foi encontrado...</p>
@@ -28,12 +28,12 @@
               <div>
                 <span>Identificação: </span>
                 <span *ngIf="!escola.editando" class="font-medium">{{ escola.iCodEscola }}</span>
-                <input pInputText *ngIf="escola.editando" [(ngModel)]="escola.iCodEscola" type="number" class="font-medium p-1 rounded-xl">
+                <input required pInputText *ngIf="escola.editando" [(ngModel)]="escola.iCodEscola" type="number"  class="font-medium p-1 rounded-xl">
               </div>
               <div class="flex gap-2">
                 <span>Descrição: </span>
                 <span *ngIf="!escola.editando" class="font-medium">{{ escola.sDescricao }}</span>
-                <input pInputText *ngIf="escola.editando" [(ngModel)]="escola.sDescricao" type="text" class="font-medium p-1 rounded-xl">
+                <input required pInputText *ngIf="escola.editando" [(ngModel)]="escola.sDescricao" type="text" class="font-medium p-1 rounded-xl">
               </div>
             </div>
             <div class="flex gap-2 p-2">
@@ -51,7 +51,7 @@
   </div>
 </div>
 <app-menu></app-menu>
-<p-toast />
+<p-toast position="top-center"/>
 <p-confirmDialog />
 
 <p-dialog
