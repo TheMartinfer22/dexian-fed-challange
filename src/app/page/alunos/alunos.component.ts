@@ -132,7 +132,6 @@ export class AlunosComponent implements OnInit {
   }
 
   salvarAluno(): void {
-    console.log(this.novoAluno.dataNascimento)
     if (this.novoAluno.iCodAluno !== 0 && this.novoAluno.iCodAluno) {
       this.alunosService.updateAluno(this.novoAluno.iCodAluno, this.novoAluno).subscribe(() => {
         this.getAlunos();
