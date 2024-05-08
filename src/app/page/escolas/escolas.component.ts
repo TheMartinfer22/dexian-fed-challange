@@ -67,23 +67,6 @@ export class EscolasComponent implements OnInit {
     ).length === 0;
   }
 
-  editarEscola(escola: Escola): void {
-    escola.editando = true;
-  }
-
-  cancelarEdicao(escola: Escola): void {
-    escola.editando = false;
-  }
-
-  salvarEscola(escola: Escola): void {
-    if (escola.iCodEscola) {
-      escola.editando = false;
-      this.escolaService.updateEscola(escola.iCodEscola, escola).subscribe(() => {
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola atualizada com sucesso' });
-      });
-    }
-  }
-
   deleteEscolaConfirm($event: MouseEvent, escola: Escola): void {
     const eventTarget = $event.target;
     if (eventTarget) {
@@ -115,16 +98,32 @@ export class EscolasComponent implements OnInit {
     }
   }
 
+  editarEscolaDialog(escola: Escola) {
+    this.visible = true;
+    this.novaEscola = {
+      iCodEscola: escola.iCodEscola,
+      sDescricao: escola.sDescricao
+    };
+  }
+
   cadastrarEscolaDialog(): void {
     this.visible = true;
   }
 
-  cadastrarEscola(): void {
-    this.escolaService.addEscola(this.novaEscola).subscribe(() => {
-      this.getEscolas();
-      this.fecharDialog();
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola cadastrada com sucesso' });
-    });
+  salvarEscola(): void {
+    if (this.novaEscola.iCodEscola !== 0 && this.novaEscola.iCodEscola) {
+      this.escolaService.updateEscola(this.novaEscola.iCodEscola, this.novaEscola).subscribe(() => {
+        this.getEscolas();
+        this.fecharDialog();
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola atualizada com sucesso' });
+      });
+    } else {
+      this.escolaService.addEscola(this.novaEscola).subscribe(() => {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Escola cadastrada com sucesso' });
+        this.fecharDialog();
+        this.getEscolas();
+      });
+    }
   }
 
   fecharDialog(): void {
